@@ -5,6 +5,9 @@ const ROCK = 0;
 const PAPER = 1;
 const SIZZORS = 2;
 
+let playerWins = 0;
+let computerWins = 0;
+
 // Randomly select a choice
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3);
@@ -50,37 +53,37 @@ function playRound(playerChoice) {
     }
 }
 
-function game() {
-    let playerWins = 0;
-    let computerWins = 0;
-    // Play 5 rounds a choose a winner
-    for (let i = 0; i < 5; i++) {
-        // The Prompt function requires a browser to be ran
-        let playerChoice = prompt('Please select: Rock, Paper, or Sizzors');
+// function game() {
+//     let playerWins = 0;
+//     let computerWins = 0;
+//     // Play 5 rounds a choose a winner
+//     for (let i = 0; i < 5; i++) {
+//         // The Prompt function requires a browser to be ran
+//         let playerChoice = prompt('Please select: Rock, Paper, or Sizzors');
 
-        let round = playRound(playerChoice)
+//         let round = playRound(playerChoice)
 
-        if (round.includes('win!') == true) {
-            playerWins++;
-        }
-        else if (round.includes('lose!') == true) {
-            computerWins++;
-        }
-    }
+//         if (round.includes('win!') == true) {
+//             playerWins++;
+//         }
+//         else if (round.includes('lose!') == true) {
+//             computerWins++;
+//         }
+//     }
 
-    console.log(playerWins, computerWins);
+//     console.log(playerWins, computerWins);
 
 
-    if (playerWins > computerWins) {
-        return "You win!"
-    }
-    else if (playerWins < computerWins) {
-        return "You lose!"
-    }
-    else {
-        return "Draw!"
-    }
-}
+//     if (playerWins > computerWins) {
+//         return "You win!"
+//     }
+//     else if (playerWins < computerWins) {
+//         return "You lose!"
+//     }
+//     else {
+//         return "Draw!"
+//     }
+// }
 
 // Function to append results to the results container
 function appendResults(results) {
@@ -91,6 +94,13 @@ function appendResults(results) {
     content.textContent = results;
     
     resultsContainer.appendChild(content);
+
+    if (results.includes('win!') == true) {
+        playerWins++;
+    }
+    else if (results.includes('lose!') == true) {
+        computerWins++;
+    }
 }
 
 // Function to remove previous results
@@ -99,6 +109,33 @@ function resetGame() {
     while (resultsContainer.firstChild) {
         resultsContainer.removeChild(resultsContainer.firstChild);
     }
+    resultsContainer.textContent = 'Results';
+
+    let result;
+
+    if (playerWins > computerWins) {
+        result = "You won!";
+    }
+    else if (playerWins < computerWins) {
+        result = "You lost!";
+    }
+    else {
+        result = "Draw!";
+    }
+
+    alert(result);
+    
+    const previousContainer = document.querySelector('.previous')
+
+    const content = document.createElement('div');
+    content.classList.add('previous-games');
+    content.textContent = result;
+    
+    previousContainer.appendChild(content);
+
+    playerWins = 0;
+    computerWins = 0;
+    return result
 }
 
 // Add event listeners to the each button
@@ -113,7 +150,6 @@ buttons.forEach((button) => {
         let rounds = document.querySelector('.results').childElementCount;
         console.log(rounds)
         if (rounds >= 5) {
-            prompt("okay game over");
             resetGame();
         }
     })
