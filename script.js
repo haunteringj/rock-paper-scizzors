@@ -58,7 +58,6 @@ function game() {
         let playerChoice = prompt('Please select: Rock, Paper, or Sizzors');
 
         let round = playRound(playerChoice, getComputerChoice())
-        console.log(round)
 
         if (round.includes('win!') == true) {
             playerWins++;
@@ -69,7 +68,17 @@ function game() {
     }
 
     console.log(playerWins, computerWins);
-    return 42;
+
+
+    if (playerWins > computerWins) {
+        return "You win!"
+    }
+    else if (playerWins < computerWins) {
+        return "You lose!"
+    }
+    else {
+        return "Draw!"
+    }
 }
 
 console.log(game())
