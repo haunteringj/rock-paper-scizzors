@@ -21,7 +21,8 @@ function getComputerChoice() {
 }
 
 // Compare player and computer inputs, and determine game results
-function playRound(playerChoice, computerChoice) {
+function playRound(playerChoice) {
+    let computerChoice = getComputerChoice();
     playerChoice = playerChoice.toLowerCase()
     
     // Cases where player wins
@@ -57,7 +58,7 @@ function game() {
         // The Prompt function requires a browser to be ran
         let playerChoice = prompt('Please select: Rock, Paper, or Sizzors');
 
-        let round = playRound(playerChoice, getComputerChoice())
+        let round = playRound(playerChoice)
 
         if (round.includes('win!') == true) {
             playerWins++;
@@ -81,4 +82,39 @@ function game() {
     }
 }
 
-console.log(game())
+// Function to append results to the results container
+function appendResults(results) {
+    const resultsContainer = document.querySelector('.results')
+
+    const content = document.createElement('div');
+    content.classList.add('results-content');
+    content.textContent = results;
+    
+    resultsContainer.appendChild(content);
+}
+
+// Function to remove previous results
+function resetGame() {
+    let resultsContainer = document.querySelector('.results')
+    while (resultsContainer.firstChild) {
+        resultsContainer.removeChild(resultsContainer.firstChild);
+    }
+}
+
+// Add event listeners to the each button
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        // Play the round and get the results
+        let results = playRound(button.textContent);
+        appendResults(results)
+
+        // Count 5 rounds. Game is finished at 5 rounds
+        let rounds = document.querySelector('.results').childElementCount;
+        console.log(rounds)
+        if (rounds >= 5) {
+            prompt("okay game over");
+            resetGame();
+        }
+    })
+})
