@@ -1,3 +1,5 @@
+// To run rock paper sizzors in the vscode terminal, run: Node script.js game
+
 // Global variables
 const ROCK = 0;
 const PAPER = 1;
@@ -52,6 +54,7 @@ function game() {
     let computerWins = 0;
     // Play 5 rounds a choose a winner
     for (let i = 0; i < 5; i++) {
+        // The Prompt function requires a browser to be ran
         let playerChoice = prompt('Please select: Rock, Paper, or Sizzors');
 
         let round = playRound(playerChoice, getComputerChoice())
